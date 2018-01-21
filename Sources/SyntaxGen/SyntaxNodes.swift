@@ -308,6 +308,10 @@ let syntaxNodes = [
     Child("parameter", kind: "TypedParameter")
   ]),
 
+  Node("UnderscoreBinding", kind: "Binding", children: [
+    Child("underscoreToken", kind: "UnderscoreToken")
+  ]),
+
   // basic-expr-list ::= <basic-expr>
   //                  | <basic-expr> <basic-expr-list>
 

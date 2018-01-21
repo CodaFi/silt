@@ -972,6 +972,8 @@ extension Parser {
         pieces.append(try parseTypedBinding())
       } else if case .identifier(_) = peek(), peek() != .arrow {
         pieces.append(try parseNamedBinding())
+      } else if case .underscore = peek() {
+        pieces.append(try parseUnderscoreBinding())
       } else {
         break
       }
@@ -992,5 +994,10 @@ extension Parser {
   func parseTypedBinding() throws -> TypedBindingSyntax {
     let parameter = try parseTypedParameter()
     return TypedBindingSyntax(parameter: parameter)
+  }
+
+  func parseUnderscoreBinding() throws -> UnderscoreBindingSyntax {
+    let parameter = try consume(.underscore)
+    return UnderscoreBindingSyntax(underscoreToken: parameter)
   }
 }

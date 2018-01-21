@@ -1489,6 +1489,28 @@ public class TypedBindingSyntax: BindingSyntax {
 
 }
 
+public class UnderscoreBindingSyntax: BindingSyntax {
+  public enum Cursor: Int {
+    case underscoreToken
+  }
+
+  public convenience init(underscoreToken: TokenSyntax) {
+    let raw = RawSyntax.node(.underscoreBinding, [
+      underscoreToken.raw,
+    ], .present)
+    let data = SyntaxData(raw: raw, indexInParent: 0, parent: nil)
+    self.init(root: data, data: data)
+  }
+  public var underscoreToken: TokenSyntax {
+    return child(at: Cursor.underscoreToken) as! TokenSyntax
+  }
+  public func withUnderscoreToken(_ syntax: TokenSyntax) -> UnderscoreBindingSyntax {
+    let (newRoot, newData) = data.replacingChild(syntax.raw, at: Cursor.underscoreToken)
+    return UnderscoreBindingSyntax(root: newRoot, data: newData)
+  }
+
+}
+
 public typealias BasicExprListSyntax = SyntaxCollection<BasicExprSyntax>
 
 public class NamedBasicExprSyntax: BasicExprSyntax {

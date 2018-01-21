@@ -26,3 +26,15 @@ record Σ (S : Type)(T : S -> Type) : Type where
     fst : S
   field
     snd : T fst
+
+_×_ : Type -> Type -> Type
+S × T = Σ S (\ _ -> T)
+
+-- The induction principle for Σ types.
+vv_ : forall {S : Type}{T : S -> Type}{P : Σ S T -> Type} ->
+      ((s : S)(t : T s) -> P (s , t)) -> -- Given a witness to the construction of P
+      (p : Σ S T) -> P p -- And a Σ, you get a p.
+vv_ p (s , t) = p s t
+
+record One : Type where
+  constructor <>

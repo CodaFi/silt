@@ -49,6 +49,7 @@ public enum SyntaxKind {
   case binding
   case namedBinding
   case typedBinding
+  case underscoreBinding
   case basicExprList
   case namedBasicExpr
   case underscoreExpr
@@ -164,6 +165,8 @@ extension Syntax {
       return NamedBindingSyntax(root: root, data: data)
     case .typedBinding:
       return TypedBindingSyntax(root: root, data: data)
+    case .underscoreBinding:
+      return UnderscoreBindingSyntax(root: root, data: data)
     case .basicExprList:
       return BasicExprListSyntax(root: root, data: data)
     case .namedBasicExpr:

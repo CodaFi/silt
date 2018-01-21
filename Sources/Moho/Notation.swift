@@ -176,6 +176,21 @@ extension NameBinding {
           for constr in node.constructorList {
             bindNotationInAscription(constr.ascription, scope)
           }
+        case let node as RecordDeclSyntax:
+          for field in node.recordElementList {
+            guard let constr = field as? RecordConstructorDeclSyntax else {
+              continue
+            }
+
+            let name = constr.constructorName
+            guard name.triviaFreeSourceText.contains("_" as Character) else {
+              break
+            }
+            guard self.bindFixity(NonFixDeclSyntax.defaultFix(for: name)) else {
+              break
+            }
+            break
+          }
         case let node as FunctionDeclSyntax:
           bindNotationInAscription(node.ascription, scope)
         case is NonFixDeclSyntax, is LeftFixDeclSyntax, is RightFixDeclSyntax:

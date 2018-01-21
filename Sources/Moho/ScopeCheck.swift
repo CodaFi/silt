@@ -247,6 +247,11 @@ extension NameBinding {
         bs.append(DeclaredParameter([bindName], .meta, .explicit))
       case let binding as TypedBindingSyntax:
         bs.append(self.scopeCheckParameter(binding.parameter))
+      case let binding as UnderscoreBindingSyntax:
+        let anonymousParam =
+          DeclaredParameter([Name(name: binding.underscoreToken)],
+                            .meta, .explicit)
+        bs.append(anonymousParam)
       default:
         fatalError()
       }
